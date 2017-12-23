@@ -46,6 +46,8 @@
 
   <mappers>
     <mapper resource="com/tcy/sql_config/Message.xml"/>
+    <mapper resource="com/tcy/sql_config/Command.xml"/>
+    <mapper resource="com/tcy/sql_config/CommandContent.xml"/>
   </mappers>
 
 </configuration>

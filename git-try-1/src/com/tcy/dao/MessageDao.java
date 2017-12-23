@@ -22,6 +22,7 @@ public class MessageDao {
 			message.setDescription(description);
 			message.setCommand(command);
 			messageList=sqlSession.selectList("IMessage.queryMessageList",message);
+			sqlSession.commit();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
