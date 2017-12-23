@@ -10,13 +10,14 @@ import com.tcy.bean.CommandContent;
 import com.tcy.bean.Message;
 import com.tcy.dao.CommandDao;
 import com.tcy.dao.MessageDao;
+import com.tcy.entity.Page;
 import com.tcy.util.Iconst;
 
 /**
  * 查询相关的业务功能
  */
 public class QueryService {
-	/*public List<Message> queryMessageList(String command,String description,Page page) {
+	public List<Message> queryMessageListByPage(String command,String description,Page page) {
 			// 组织消息对象
 			Message message = new Message();
 			message.setCommand(command);
@@ -30,8 +31,8 @@ public class QueryService {
 			parameter.put("message", message);
 			parameter.put("page", page);
 			// 分页查询并返回结果
-			return messageDao.queryMessageList(parameter);
-		}*/
+			return messageDao.queryMessageListByPage(parameter);
+		}
 		
 		/**
 		 * 根据查询条件分页查询消息列表
