@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-alsdjfk
+@WebServlet(name="AnnotationServlet",urlPatterns="/AnnotationServlet")
 </body>
 </html>
