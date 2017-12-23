@@ -3,6 +3,7 @@ package com.tcy.dao;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -11,22 +12,45 @@ import com.tcy.db.DBUtil;
 
 public class MessageDao {
 	
-	/*根据查询条件查询消息列表*/
-	public List<Message> queryMessageList(String command,String description){
+	/**
+	 * 根据查询条件查询消息列表的条数
+	 */
+	public int count(Message message) {
 		DBUtil dbUtil=new DBUtil();
-		List<Message> messageList=new ArrayList<Message>();
-		SqlSession sqlSession=null;
+		SqlSession sqlSession = null;
+		int result = 0;
 		try {
-			sqlSession=dbUtil.getSqlSession();
-			Message message = new Message();
-			message.setDescription(description);
-			message.setCommand(command);
-			messageList=sqlSession.selectList("IMessage.queryMessageList",message);
-		} catch (IOException e) {
+			sqlSession = dbUtil.getSqlSession();
+			// 通过sqlSession执行SQL语句
+			IMessage imessage = sqlSession.getMapper(IMessage.class);
+			result = imessage.count(message);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			if(sqlSession!=null) {
+		} finally {
+			if(sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+		return result;
+	}
+	/**
+	 * 根据查询条件分页查询消息列表
+	 */
+	public List<Message> queryMessageListByPage(Map<String,Object> parameter) {
+		DBUtil dbUtil=new DBUtil();
+		List<Message> messageList = new ArrayList<Message>();
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = dbUtil.getSqlSession();
+			// 通过sqlSession执行SQL语句
+			IMessage imessage = sqlSession.getMapper(IMessage.class);
+			messageList = imessage.queryMessageListByPage(parameter);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(sqlSession != null) {
 				sqlSession.close();
 			}
 		}
@@ -39,7 +63,9 @@ public class MessageDao {
 		SqlSession sqlSession=null;
 		try {
 			sqlSession=dbUtil.getSqlSession();
-			sqlSession.delete("IMessage.deleteOne",id);
+			IMessage imessage = sqlSession.getMapper(IMessage.class);
+			imessage.deleteOne(id);
+			/*sqlSession.delete("IMessage.deleteOne",id);*/
 			sqlSession.commit();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -56,7 +82,9 @@ public class MessageDao {
 		SqlSession sqlSession=null;
 		try {
 			sqlSession=dbUtil.getSqlSession();
-			sqlSession.delete("IMessage.deleteBatch",ids);
+			IMessage imessage = sqlSession.getMapper(IMessage.class);
+			imessage.deleteBatch(ids);
+			//sqlSession.delete("IMessage.deleteBatch",ids);
 			sqlSession.commit();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
