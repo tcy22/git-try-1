@@ -29,6 +29,10 @@
   <typeAliases>
     <typeAlias alias="UserAlias" type="org.apache.ibatis.submitted.complex_property.User"/>
   </typeAliases> -->
+  
+  <plugins>
+    <plugin interceptor="com.tcy.interceptor.PageInterceptor" /> 
+  </plugins>
 
   <environments default="development">
     <environment id="development">
